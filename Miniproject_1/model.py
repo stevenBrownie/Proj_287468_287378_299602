@@ -90,9 +90,10 @@ class Model():
         '''
         # if the data in in range: 0-255, we normalize them
         if train_input.type()=='torch.ByteTensor':
-            train_input=train_input/255.
-        if train_target.type()=='troch.ByteTensor':
-            train_target = train_target/255.
+            train_input=train_input.float()/255.
+            print('in if')
+        if train_target.type()=='torch.ByteTensor':
+            train_target = train_target.float()/255.
 
         # move data to GPU if it exists
         self.model.to(self.device)
@@ -141,7 +142,7 @@ class Model():
             self.model.cuda()
     
         if test_input.type()=='torch.ByteTensor':
-            test_input=test_input/255.
+            test_input=test_input.float()/255.
        
         predicted_tensor = self.model(test_input) * 255.
         return (predicted_tensor.detach().cpu() > 0) * predicted_tensor.detach().cpu() + 1e-13  # we want positive prediction
