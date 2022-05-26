@@ -10,7 +10,7 @@ Steven Brown, Guillaume Briand and Paulin de Schoulepnikoff
 import torch
 from torch.nn.functional import fold, unfold
 
-class Module (object) :
+class Module () :
   def forward (self, input) : 
       # should get for input and returns, a tensor or a tuple of tensors
       raise NotImplementedError
@@ -301,7 +301,7 @@ class MSELoss (Module):
     
 # SGD - Stochastic gradient descent 
 
-class SGD (object): 
+class SGD (): 
   def __init__(self,model,lr = 0.05) -> None :
     self.model = model
     self.lr = lr

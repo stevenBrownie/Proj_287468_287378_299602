@@ -4,7 +4,7 @@ from torch import optim
 #import os
 from pathlib import Path
 
-#best_model_path_old=str(os.path.dirname(__file__))+'/bestmodel.pth'
+
 best_model_path=str(Path(__file__).parent)+'/bestmodel.pth'
 class Model():
     def __init__(self) -> None:
@@ -82,7 +82,7 @@ class Model():
         train_input:      tensor of size (N, C, H, W) containing a noisy version of the images.
         train_target:     tensor of size (N, C, H, W) containing another noisy version of the
                           same images, which only differs from the input by their noise.
-        nb_epochs:        number of epochs to train the model
+        num_epochs:        number of epochs to train the model
         mb_size:          minibatch size
         print_evolution:  bool, if True, the loss and the number of epoch will be printed during
                           the training
