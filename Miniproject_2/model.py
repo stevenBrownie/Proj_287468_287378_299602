@@ -22,11 +22,9 @@ class Model():
                             ReLU(),
                             Conv2d(32,64,stride=2),
                             ReLU(),
-                            NearestUpsampling(2), #by default upsampling *2 the dimension is squared
-                            Conv2d(64,32,kernel_size=2,stride=1,padding=1),     #conv must match the dimension
+                            TransposeConv2d(64,32,kernel_size=2,stride=1,padding=1),
                             ReLU(),
-                            NearestUpsampling(2),
-                            Conv2d(32,3,kernel_size=3,stride=1),
+                            TransposeConv2d(32,3,kernel_size=3,stride=1),
                             Sigmoid())
 
     self.criterion = MSELoss(self.model) #creates andlinks the MSELoss too the model
@@ -260,7 +258,7 @@ class NearestUpsampling (Module) : #This is a 2D Nearest upsampling module
 
     #no paramaters
     
-# TranposeConv2d - combination of NNUpsampling + 
+# TranposeConv2d - combination of NNUpsampling + conv2d
 
 class TransposeConv2d (Module): #this module combines two modules: 1 NearestUpsampling and 1 Conv2d
 
@@ -380,14 +378,14 @@ class MSELoss (Module):
   def dMSELoss(self,model_output,target):
     return 2*(model_output-target)/torch.prod(torch.tensor(model_output.size()))  #mean over every pixel
 
-  def backward (self):
+  def backward (self) -> None:
    
     dloss=self.dMSELoss(self.model_output,self.target)
     self.sequential.backward(dloss) #dloss is the gradwrtoutput of sequential
     
 # SGD - Stochastic gradient descent 
 
-class SGD (): 
+class SGD ():
   def __init__(self,model,lr = 0.05) -> None :
     self.model = model
     self.lr = lr

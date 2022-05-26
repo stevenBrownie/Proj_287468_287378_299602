@@ -1,7 +1,6 @@
 import torch
 from torch import nn
 from torch import optim
-#import os
 from pathlib import Path
 
 
@@ -69,13 +68,13 @@ class Model():
         ## This loads the parameters saved in bestmodel.pth into the model
         path=best_model_path
         if self.use_cuda:
-            self.model.load_state_dict(torch.load(path)) #need to be change
+            self.model.load_state_dict(torch.load(path)) 
         else:
             self.model.load_state_dict(
-                torch.load(path, map_location='cpu')) #need to be change
+                torch.load(path, map_location='cpu')) 
 
     def save_model(self) -> None:
-        torch.save(self.model.state_dict(), best_model_path) #need to be change
+        torch.save(self.model.state_dict(), best_model_path)
 
     def train(self, train_input, train_target, num_epochs=1, mb_size=4, print_evolution=False, hybrid=False) -> None:
         '''
@@ -102,7 +101,7 @@ class Model():
         train_target = train_target.to(self.device)
 
         self.loss_history = train_input.new_zeros(
-            num_epochs)  # this creates new tensor with space position as train inout (CPU/GPU)
+            num_epochs) 
 
         i = 0
         if hybrid == True:
